@@ -1,0 +1,7 @@
+fuzzy_date-*.gem
+*~
+# Other source repository archive directories (protects when importing)
+.hg
+.svn
+CVS
+

@@ -1,0 +1,57 @@
+  Routines to manage the FuzzyDate Class. There is also an extension to the 
+  ActiveRecord::Base class to provide an 'acts_as_fuzzy_date' class method.
+  
+  Historical dates are often incomplete or approximate and this class allows 
+  such dates to be worked with and stored on a database.
+  
+  construct a new object with FuzzyDate.new( year,month,day,wday,circa)
+     year:   optional..is the year number 0 .. big as you like, -ve for BCE
+     month:  optional.. is month number 1..12, or nil
+     day:    optional.. is day number 1-31 or nil
+     wday:   optional.. day of the week - 0=Sunday .. 6=Saturday
+     circa:  true = daye is approx, or nil/false
+     
+     note that if you supply the weekday and a year/month/day the system will
+     use your weekday as supplied even if this does not actually correspond
+     in reality to the date supplied.
+     
+   construct a new object with FuzzyDate.parse("date_string")
+     date_string = eg: "tuesday"
+                       "12 nov 1012"
+                       "circa 412 bc"
+                       
+   Use in a database table by storing in an integer field of a format large
+   enough to hold the digits of your maximum year + 8. Eg. a BIGNUM field
+   stores 19 useful characters allowing the year to go to 99,999,999,999.
+   ie 99 billion years.
+   
+   Use with an ActiveRecord class ..
+   
+       require 'fuzzy_date'
+
+       class HistoricalPerson < ActiveRecord::Base
+           acts_as_fuzzy_date : birth_date, death_date
+       end
+       
+       
+
+  Copyright (c) Clive Andrews / Reality Bites 2008, 2009, 2010
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
