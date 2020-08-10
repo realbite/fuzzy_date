@@ -77,18 +77,18 @@ class TestItem < Test::Unit::TestCase
     assert ( !d1.circa?)
     assert ( !d1.unknown?)
   end
-  
+
   def test_database
-    10000.times do 
+    10000.times do
       d = make_fuzzy_date
-      puts d.to_s
+      #puts d.to_s
       i = d.to_i
       i = i * 1 # reformat ?
       d2 = FuzzyDate.new_from_db( i )
       assert_equal( d.to_i, d2.to_i)
     end
   end
-  
+
   def test_compare
     assert( FuzzyDate.parse("23 april 2000") == FuzzyDate.parse("23 april 2000") )
     assert( FuzzyDate.parse("24 april 2000") > FuzzyDate.parse("23 april 2000") )
@@ -96,7 +96,7 @@ class TestItem < Test::Unit::TestCase
     assert( FuzzyDate.parse("jan 2001") > FuzzyDate.parse("dec 2000") )
     assert( FuzzyDate.parse("sept") > FuzzyDate.parse("july") )
   end
-  
+
   # generate a random fuzzy date
   def make_fuzzy_date
     #    1  2  3  4  5  6  7  8  9  10 11 12
@@ -107,11 +107,11 @@ class TestItem < Test::Unit::TestCase
     day       = rand(tab[month-1]) + 1
     circa     = rand(4) == 0
     bce       = rand(2) == 0
-    do_year   = rand(3) > 0
-    do_month  = rand(3) > 0
-    do_day    = rand(3) > 0
-    do_wday   = rand(3) > 0
-    
+    do_year   = true if rand(3) > 0
+    do_month  = true if rand(3) > 0
+    do_day    = true if rand(3) > 0
+    do_wday   = true if rand(3) > 0
+
     year = - year if bce
     FuzzyDate.new( do_year && year,
                    do_month && month,
